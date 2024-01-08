@@ -39,3 +39,13 @@ export class UpdateUser {
         return res.status(200).json('usuario atualizado')
     }
 }
+
+export class DeleteUser {
+    async store(req: Request, res: Response) {
+        const { id } = req.params
+
+        const user = await userRepository.delete({ id: Number(id) })
+
+        return res.status(200).json('usuario deletado')
+    }
+}
