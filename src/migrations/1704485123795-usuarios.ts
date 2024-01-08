@@ -21,7 +21,7 @@ export class Usuarios1704485123795 implements MigrationInterface {
                     isUnique: true
                 },
                 {
-                    name: 'passwoard',
+                    name: 'password',
                     type: 'text'
                 }
             ]

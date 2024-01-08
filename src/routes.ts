@@ -1,11 +1,10 @@
-import { Request, Response, Router } from 'express'
-
-
+import { Router } from 'express'
+import { TesteController, UserController } from './controllers/UserController'
 
 const routes = Router()
 
-routes.get('/', async (req: Request, res: Response) => {
-    return res.json('tudo certo')
-})
+routes.get('/', new TesteController().store)
+
+routes.post('/adduser', new UserController().store)
 
 export default routes
