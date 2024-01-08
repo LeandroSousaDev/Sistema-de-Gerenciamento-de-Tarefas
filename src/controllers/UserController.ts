@@ -28,3 +28,14 @@ export class DeatilUser {
         return res.status(200).json(user)
     }
 }
+
+export class UpdateUser {
+    async store(req: Request, res: Response) {
+        const { id } = req.params
+        const { name, email, password } = req.body
+
+        await userRepository.update({ id: Number(id) }, { name, email, password })
+
+        return res.status(200).json('usuario atualizado')
+    }
+}
