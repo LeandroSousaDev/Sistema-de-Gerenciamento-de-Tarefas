@@ -13,4 +13,7 @@ routes.put('/:id', new UpdateUser().store)
 
 routes.delete('/:id', new DeleteUser().store)
 
+
+
+
 export default routes
