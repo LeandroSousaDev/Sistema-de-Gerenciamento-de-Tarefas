@@ -3,17 +3,16 @@ import { AddUser, DeatilUser, DeleteUser, ListAllUser, UpdateUser } from './cont
 
 const routes = Router()
 
-routes.get('/', new ListAllUser().store)
+routes.get('/users', new ListAllUser().store)
+routes.post('/adUser', new AddUser().store)
+routes.get('/user/:id', new DeatilUser().store)
+routes.put('/user/:id', new UpdateUser().store)
+routes.delete('/user/:id', new DeleteUser().store)
 
-routes.post('/adduser', new AddUser().store)
-
-routes.get('/:id', new DeatilUser().store)
-
-routes.put('/:id', new UpdateUser().store)
-
-routes.delete('/:id', new DeleteUser().store)
-
-
-
+routes.get('/tasks',)
+routes.post('/adTask',)
+routes.get('/task/:id',)
+routes.put('/task/:id',)
+routes.delete('/user/:id',)
 
 export default routes
