@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { AddUser, DeatilUser, DeleteUser, ListAllUser, UpdateUser } from './controllers/UserController'
+import { AddTask } from './controllers/taskController'
 
 const routes = Router()
 
@@ -10,7 +11,7 @@ routes.put('/user/:id', new UpdateUser().store)
 routes.delete('/user/:id', new DeleteUser().store)
 
 routes.get('/tasks',)
-routes.post('/adTask',)
+routes.post('/adTask', new AddTask().store)
 routes.get('/task/:id',)
 routes.put('/task/:id',)
 routes.delete('/user/:id',)
