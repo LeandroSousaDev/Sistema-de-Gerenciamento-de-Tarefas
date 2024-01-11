@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { AddUser, DeatilUser, DeleteUser, ListAllUser, UpdateUser } from './controllers/UserController'
-import { AddTask } from './controllers/taskController'
+import { AddTask, DeatilTask, DeleteTask, UpdateTask, listAllTask } from './controllers/taskController'
 
 const routes = Router()
 
@@ -10,10 +10,10 @@ routes.get('/user/:id', new DeatilUser().store)
 routes.put('/user/:id', new UpdateUser().store)
 routes.delete('/user/:id', new DeleteUser().store)
 
-routes.get('/tasks',)
+routes.get('/tasks', new listAllTask().store)
 routes.post('/adTask', new AddTask().store)
-routes.get('/task/:id',)
-routes.put('/task/:id',)
-routes.delete('/user/:id',)
+routes.get('/task/:id', new DeatilTask().store)
+routes.put('/task/:id', new UpdateTask().store)
+routes.delete('/task/:id', new DeleteTask().store)
 
 export default routes
