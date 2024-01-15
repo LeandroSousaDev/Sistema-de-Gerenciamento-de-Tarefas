@@ -23,7 +23,12 @@ export class DeatilUser {
     async store(req: Request, res: Response) {
         const { id } = req.params
 
-        const user = await userRepository.findOne({ where: { id: Number(id) } })
+        const user = await userRepository.findOne({
+            where: { id: Number(id) },
+            relations: {
+                tasks: true
+            }
+        })
 
         return res.status(200).json(user)
     }
