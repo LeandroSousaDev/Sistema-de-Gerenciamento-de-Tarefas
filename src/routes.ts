@@ -1,9 +1,10 @@
 import { Router } from 'express'
-import { AddUser, DeatilUser, DeleteUser, ListAllUser, UpdateUser } from './controllers/UserController'
+import { AddUser, DeatilUser, DeleteUser, ListAllUser, UpdateUser, loginUser } from './controllers/UserController'
 import { AddTask, DeatilTask, DeleteTask, UpdateTask, listAllTask } from './controllers/taskController'
 
 const routes = Router()
 
+routes.post('/loginUser', new loginUser().store)
 routes.get('/users', new ListAllUser().store)
 routes.post('/adUser', new AddUser().store)
 routes.get('/user/:id', new DeatilUser().store)

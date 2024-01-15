@@ -1,14 +1,49 @@
 import { Request, Response } from 'express'
 import { userRepository } from '../repositories/userRepository'
+import bcrypt from 'bcrypt'
+import jwt from "jsonwebtoken";
 
+export class loginUser {
+    async store(req: Request, res: Response) {
+        const { email, password } = req.body
+
+        const user = await userRepository.findOne({ where: { email: email } })
+
+        if (!user) {
+            return res.status(404).json({ mensagem: "Usuário não encontrado" });
+        }
+
+        const validPassword = await bcrypt.compare(password, user.password)
+
+        if (!validPassword) {
+            return res.status(400).json({ mensagem: "Senha inválida" });
+        }
+
+        const token = jwt.sign({ id: user.id }, String(process.env.JWT_SECRET), { expiresIn: "8h" })
+
+        const { password: use_password, ...userLogged } = user;
+
+        return res.status(200).json({ ...userLogged, token });
+    }
+}
 export class AddUser {
     async store(req: Request, res: Response) {
         const { name, email, password } = req.body
 
-        const newUser = userRepository.create({ name, email, password })
-        await userRepository.save(newUser)
+        const passwordBcrypt = await bcrypt.hash(password, 10);
 
-        return res.status(201).json({ ...newUser })
+
+        const newUser = userRepository.create({ name, email, password })
+
+        const newUserbcrypt = {
+            name,
+            email,
+            password: passwordBcrypt
+        };
+
+        await userRepository.save(newUserbcrypt)
+
+        return res.status(201).json({ ...newUserbcrypt })
     }
 }
 
