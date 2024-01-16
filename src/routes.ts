@@ -1,12 +1,16 @@
 import { Router } from 'express'
 import { AddUser, DeatilUser, DeleteUser, ListAllUser, UpdateUser, loginUser } from './controllers/UserController'
 import { AddTask, DeatilTask, DeleteTask, UpdateTask, listAllTask } from './controllers/taskController'
+import { validationLogin } from './middlewares/validation'
 
 const routes = Router()
 
 routes.post('/loginUser', new loginUser().store)
-routes.get('/users', new ListAllUser().store)
 routes.post('/adUser', new AddUser().store)
+
+routes.use(validationLogin)
+
+routes.get('/users', new ListAllUser().store)
 routes.get('/user/:id', new DeatilUser().store)
 routes.put('/user/:id', new UpdateUser().store)
 routes.delete('/user/:id', new DeleteUser().store)
