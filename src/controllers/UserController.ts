@@ -33,7 +33,7 @@ export class AddUser {
         const passwordBcrypt = await bcrypt.hash(password, 10);
 
 
-        const newUser = userRepository.create({ name, email, password })
+        userRepository.create({ name, email, password })
 
         const newUserbcrypt = {
             name,
@@ -56,7 +56,12 @@ export class ListAllUser {
 
 export class DeatilUser {
     async store(req: Request, res: Response) {
-        const { id } = req.params
+
+        type User = {
+            password: string
+        }
+
+        const id = req.user.id
 
         const user = await userRepository.findOne({
             where: { id: Number(id) },
@@ -65,7 +70,9 @@ export class DeatilUser {
             }
         })
 
-        return res.status(200).json(user)
+        const { password, ...data } = user as User
+
+        return res.status(200).json(data)
     }
 }
 

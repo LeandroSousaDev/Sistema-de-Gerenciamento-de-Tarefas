@@ -7,16 +7,19 @@ const routes = Router()
 
 routes.post('/loginUser', new loginUser().store)
 routes.post('/adUser', new AddUser().store)
+// adiciona verificação de email ja estacadas trado
 
 routes.use(validationLogin)
 
-routes.get('/users', new ListAllUser().store)
-routes.get('/user/:id', new DeatilUser().store)
+routes.get('/loggedUser', new DeatilUser().store)
 routes.put('/user/:id', new UpdateUser().store)
+//deixa a atualização dinamica
+//adiciona o bcrypt no email
 routes.delete('/user/:id', new DeleteUser().store)
 
-routes.get('/tasks', new listAllTask().store)
 routes.post('/adTask', new AddTask().store)
+//adiciona verificação id de usuaruio existi
+//adiciciona req para id do usuario
 routes.get('/task/:id', new DeatilTask().store)
 routes.put('/task/:id', new UpdateTask().store)
 routes.delete('/task/:id', new DeleteTask().store)
