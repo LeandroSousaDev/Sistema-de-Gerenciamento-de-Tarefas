@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { userRepository } from '../repositories/userRepository'
 import bcrypt from 'bcrypt'
 import jwt from "jsonwebtoken";
-import { Conflict } from '../helpers/api-error';
+import { Conflict, NotFoundError } from '../helpers/api-error';
 
 export class loginUser {
     async store(req: Request, res: Response) {
@@ -11,7 +11,7 @@ export class loginUser {
         const user = await userRepository.findOne({ where: { email: email } })
 
         if (!user) {
-            return res.status(404).json({ mensagem: "Usuário não encontrado" });
+            throw new NotFoundError('Usuário não encontrado')
         }
 
         const validPassword = await bcrypt.compare(password, user.password)

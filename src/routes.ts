@@ -15,8 +15,6 @@ routes.put('/updateUser/', new UpdateUser().store)
 routes.delete('/deleteUser', new DeleteUser().store)
 
 routes.post('/adTask', new AddTask().store)
-//adiciona verificação id de usuaruio existi
-//adiciciona req para id do usuario
 routes.get('/task/:id', new DeatilTask().store)
 routes.put('/task/:id', new UpdateTask().store)
 routes.delete('/task/:id', new DeleteTask().store)

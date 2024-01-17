@@ -1,14 +1,26 @@
 import { Request, Response } from 'express'
 import { taskRepository } from '../repositories/taskRepository'
+import { NotFoundError } from '../helpers/api-error'
+import { DeepPartial } from 'typeorm'
+import { User } from '../entities/User'
+import { userRepository } from '../repositories/userRepository'
 
 export class AddTask {
     async store(req: Request, res: Response) {
         const { task, deadline, status, user } = req.body
 
-        const newTask = taskRepository.create({ task, deadline, status, user })
+        const id = req.user.id
+
+        const userExit = await userRepository.findOne({ where: { id: id } })
+
+        if (!userExit) {
+            throw new NotFoundError('Usuário não existi')
+        }
+
+        const newTask = taskRepository.create({ task, deadline, status, user: userExit })
         await taskRepository.save(newTask)
 
-        return res.status(201).json({ ...newTask })
+        return res.status(201).json({ task, deadline, status, user_id: id })
     }
 }
 
