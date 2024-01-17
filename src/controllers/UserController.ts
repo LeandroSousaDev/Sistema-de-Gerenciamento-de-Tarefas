@@ -52,13 +52,6 @@ export class AddUser {
     }
 }
 
-export class ListAllUser {
-    async store(req: Request, res: Response) {
-        const users = await userRepository.find()
-        return res.status(200).json(users)
-    }
-}
-
 export class DeatilUser {
     async store(req: Request, res: Response) {
 

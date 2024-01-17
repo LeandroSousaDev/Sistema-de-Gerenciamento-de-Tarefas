@@ -1,8 +1,6 @@
 import { Request, Response } from 'express'
 import { taskRepository } from '../repositories/taskRepository'
 import { NotFoundError } from '../helpers/api-error'
-import { DeepPartial } from 'typeorm'
-import { User } from '../entities/User'
 import { userRepository } from '../repositories/userRepository'
 
 export class AddTask {
@@ -21,13 +19,6 @@ export class AddTask {
         await taskRepository.save(newTask)
 
         return res.status(201).json({ task, deadline, status, user_id: id })
-    }
-}
-
-export class listAllTask {
-    async store(req: Request, res: Response) {
-        const tasks = await taskRepository.find()
-        return res.status(200).json(tasks)
     }
 }
 

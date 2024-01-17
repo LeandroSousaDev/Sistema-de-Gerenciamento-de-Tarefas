@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { AddUser, DeatilUser, DeleteUser, ListAllUser, UpdateUser, loginUser } from './controllers/UserController'
-import { AddTask, DeatilTask, DeleteTask, UpdateTask, listAllTask } from './controllers/taskController'
+import { AddUser, DeatilUser, DeleteUser, UpdateUser, loginUser } from './controllers/UserController'
+import { AddTask, DeatilTask, DeleteTask, UpdateTask } from './controllers/taskController'
 import { validationLogin } from './middlewares/validation'
 
 const routes = Router()
