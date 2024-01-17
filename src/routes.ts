@@ -7,7 +7,6 @@ const routes = Router()
 
 routes.post('/loginUser', new loginUser().store)
 routes.post('/adUser', new AddUser().store)
-// adiciona verificação de email ja estacadas trado
 
 routes.use(validationLogin)
 

@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { userRepository } from '../repositories/userRepository'
 import bcrypt from 'bcrypt'
 import jwt from "jsonwebtoken";
+import { Conflict } from '../helpers/api-error';
 
 export class loginUser {
     async store(req: Request, res: Response) {
@@ -30,10 +31,13 @@ export class AddUser {
     async store(req: Request, res: Response) {
         const { name, email, password } = req.body
 
+        const user = await userRepository.findOne({ where: { email: email } })
+
+        if (user) {
+            throw new Conflict('Usuário Ja esta cadastrado')
+        }
+
         const passwordBcrypt = await bcrypt.hash(password, 10);
-
-
-        userRepository.create({ name, email, password })
 
         const newUserbcrypt = {
             name,
@@ -41,7 +45,8 @@ export class AddUser {
             password: passwordBcrypt
         };
 
-        await userRepository.save(newUserbcrypt)
+        const newUser = userRepository.create(newUserbcrypt)
+        await userRepository.save(newUser)
 
         return res.status(201).json({ ...newUserbcrypt })
     }
