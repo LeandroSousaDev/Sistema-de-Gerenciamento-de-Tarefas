@@ -11,10 +11,8 @@ routes.post('/adUser', new AddUser().store)
 routes.use(validationLogin)
 
 routes.get('/loggedUser', new DeatilUser().store)
-routes.put('/user/:id', new UpdateUser().store)
-//deixa a atualização dinamica
-//adiciona o bcrypt no email
-routes.delete('/user/:id', new DeleteUser().store)
+routes.put('/updateUser/', new UpdateUser().store)
+routes.delete('/deleteUser', new DeleteUser().store)
 
 routes.post('/adTask', new AddTask().store)
 //adiciona verificação id de usuaruio existi

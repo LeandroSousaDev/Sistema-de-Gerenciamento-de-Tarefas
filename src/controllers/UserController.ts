@@ -83,10 +83,19 @@ export class DeatilUser {
 
 export class UpdateUser {
     async store(req: Request, res: Response) {
-        const { id } = req.params
         const { name, email, password } = req.body
 
-        await userRepository.update({ id: Number(id) }, { name, email, password })
+        const id = req.user.id
+
+        const passwordBcrypt = await bcrypt.hash(password, 10);
+
+        const updateUser = {
+            name,
+            email,
+            password: passwordBcrypt
+        };
+
+        await userRepository.update({ id: Number(id) }, updateUser)
 
         return res.status(200).json('usuario atualizado')
     }
@@ -94,7 +103,8 @@ export class UpdateUser {
 
 export class DeleteUser {
     async store(req: Request, res: Response) {
-        const { id } = req.params
+
+        const id = req.user.id
 
         await userRepository.delete({ id: Number(id) })
 
