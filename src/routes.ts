@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { AddUser, DeatilUser, DeleteUser, UpdateUser, loginUser } from './controllers/UserController'
+import { AddUser, DeatilUser, DeleteUser, UpdateUser, loginUser } from './controllers/userController'
 import { AddTask, DeatilTask, DeleteTask, UpdateTask } from './controllers/taskController'
 import { validationLogin } from './middlewares/validation'
 
