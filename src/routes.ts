@@ -9,6 +9,7 @@ routes.post('/loginUser', new loginUser().store)
 routes.post('/adUser', new AddUser().store)
 
 routes.use(validationLogin)
+// verificar tratamento de erro
 
 routes.get('/loggedUser', new DeatilUser().store)
 routes.put('/updateUser/', new UpdateUser().store)
@@ -18,5 +19,6 @@ routes.post('/adTask', new AddTask().store)
 routes.get('/task/:id', new DeatilTask().store)
 routes.put('/task/:id', new UpdateTask().store)
 routes.delete('/task/:id', new DeleteTask().store)
+// adicionar função deleta subtask
 
 export default routes

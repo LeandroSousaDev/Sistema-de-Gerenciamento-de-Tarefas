@@ -1,21 +1,14 @@
 import { Request, Response } from 'express'
 import { taskRepository } from '../repositories/taskRepository'
 import { NotFoundError } from '../helpers/api-error'
-import { userRepository } from '../repositories/userRepository'
 
 export class AddTask {
     async store(req: Request, res: Response) {
-        const { task, deadline, status, user } = req.body
+        const { task, deadline, status } = req.body
 
-        const id = req.user.id
+        const id = req.user
 
-        const userExit = await userRepository.findOne({ where: { id: id } })
-
-        if (!userExit) {
-            throw new NotFoundError('Usuário não existi')
-        }
-
-        const newTask = taskRepository.create({ task, deadline, status, user: userExit })
+        const newTask = taskRepository.create({ task, deadline, status, user: id })
         await taskRepository.save(newTask)
 
         return res.status(201).json({ task, deadline, status, user_id: id })
