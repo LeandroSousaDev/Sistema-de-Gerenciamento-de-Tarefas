@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { AddUser, DeatilUser, DeleteUser, UpdateUser, loginUser } from './controllers/userController'
 import { AddTask, DeatilTask, DeleteTask, UpdateTask } from './controllers/taskController'
 import { validationLogin } from './middlewares/validation'
+import { AddSubTask, DeleteSubTask } from './controllers/subTaskController'
 
 const routes = Router()
 
@@ -19,6 +20,9 @@ routes.post('/adTask', new AddTask().store)
 routes.get('/task/:id', new DeatilTask().store)
 routes.put('/task/:id', new UpdateTask().store)
 routes.delete('/task/:id', new DeleteTask().store)
-// adicionar função deleta subtask
+//adicionar verificação se tarefa exixte
+
+routes.post('/addSubTask', new AddSubTask().store)
+routes.delete('/subtask/:id', new DeleteSubTask().store)
 
 export default routes

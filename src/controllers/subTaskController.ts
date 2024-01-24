@@ -1,11 +1,19 @@
 import { Request, Response } from 'express'
 import { subTaskRepository } from '../repositories/subTaskRepository'
+import { taskRepository } from '../repositories/taskRepository'
+import { Conflict } from '../helpers/api-error'
 
 export class AddSubTask {
     async store(req: Request, res: Response) {
-        const { subTask, task } = req.body
+        const { subTask, id } = req.body
 
-        const newSubTask = subTaskRepository.create({ subTask, task })
+        const task = await taskRepository.findOne({ where: { id } })
+
+        if (!task) {
+            throw new Conflict('Essa tarefa não existe')
+        }
+
+        const newSubTask = subTaskRepository.create({ subTask, task: id })
         await subTaskRepository.save(newSubTask)
 
         return res.status(201).json(newSubTask)
