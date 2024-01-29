@@ -15,10 +15,6 @@ export class AddSubTask {
             throw new Conflict('Essa tarefa não existe')
         }
 
-        // if (Number(task.user.id) != Number(user_id.id)) {
-        //     throw new Conflict('tarefa não corresponde a esse usuario')
-        // }
-
         const newSubTask = subTaskRepository.create({ subTask, task: task_id, user: user_id })
         await subTaskRepository.save(newSubTask)
 

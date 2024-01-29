@@ -13,9 +13,5 @@ export const validationUser = async (req: Request, res: Response, next: NextFunc
         throw new Conflict('essa tarefa não existe')
     }
 
-    // if (taskExist.user.id != id_user.id) {
-    //     throw new Conflict('Voce não tem acesso a essa tarefa')
-    // }
-
     next()
 }
