@@ -5,15 +5,21 @@ import { Conflict } from '../helpers/api-error'
 
 export class AddSubTask {
     async store(req: Request, res: Response) {
-        const { subTask, id } = req.body
+        const { subTask, task_id } = req.body
 
-        const task = await taskRepository.findOne({ where: { id } })
+        const user_id = req.user
+
+        const task = await taskRepository.findOne({ where: { id: task_id } })
 
         if (!task) {
             throw new Conflict('Essa tarefa não existe')
         }
 
-        const newSubTask = subTaskRepository.create({ subTask, task: id })
+        // if (Number(task.user.id) != Number(user_id.id)) {
+        //     throw new Conflict('tarefa não corresponde a esse usuario')
+        // }
+
+        const newSubTask = subTaskRepository.create({ subTask, task: task_id, user: user_id })
         await subTaskRepository.save(newSubTask)
 
         return res.status(201).json(newSubTask)

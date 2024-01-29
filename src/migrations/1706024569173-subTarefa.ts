@@ -18,17 +18,26 @@ export class SubTarefa1706024569173 implements MigrationInterface {
                 {
                     name: 'task_id',
                     type: 'integer'
+                },
+                {
+                    name: 'user_id',
+                    type: 'integer'
                 }
             ]
         }))
 
-        await queryRunner.createForeignKey('subTasks',
+        await queryRunner.createForeignKeys('subTasks', [
             new TableForeignKey({
                 columnNames: ['task_id'],
                 referencedTableName: 'tasks',
+                referencedColumnNames: ['id'],
+            }),
+            new TableForeignKey({
+                columnNames: ['user_id'],
+                referencedTableName: 'users',
                 referencedColumnNames: ['id']
             })
-        )
+        ])
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

@@ -3,6 +3,8 @@ import { userRepository } from '../repositories/userRepository'
 import bcrypt from 'bcrypt'
 import jwt from "jsonwebtoken";
 import { Conflict, NotFoundError } from '../helpers/api-error';
+import { taskRepository } from '../repositories/taskRepository';
+import { subTaskRepository } from '../repositories/subTaskRepository';
 
 export class loginUser {
     async store(req: Request, res: Response) {
@@ -99,7 +101,11 @@ export class DeleteUser {
 
         const id = req.user.id
 
-        await userRepository.delete({ id: Number(id) })
+        await subTaskRepository.delete({ user: { id } })
+
+        await taskRepository.delete({ user: { id } })
+
+        await userRepository.delete({ id })
 
         return res.status(200).json('usuario deletado')
     }
