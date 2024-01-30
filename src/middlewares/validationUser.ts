@@ -1,4 +1,4 @@
-import { Conflict } from "../helpers/api-error"
+import { BadRequestError, Conflict } from "../helpers/api-error"
 import { taskRepository } from "../repositories/taskRepository"
 import { NextFunction, Request, Response } from 'express'
 
@@ -11,6 +11,17 @@ export const validationUser = async (req: Request, res: Response, next: NextFunc
 
     if (!taskExist) {
         throw new Conflict('essa tarefa não existe')
+    }
+
+    const task = await taskRepository.findOne({
+        where: { id: Number(id) },
+        relations: {
+            user: true
+        }
+    })
+
+    if (task?.user.id != id_user.id) {
+        throw new BadRequestError('voce não tem acesso a essa task')
     }
 
     next()

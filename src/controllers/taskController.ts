@@ -12,7 +12,7 @@ export class AddTask {
         const newTask = taskRepository.create({ task, deadline, status, user: id })
         await taskRepository.save(newTask)
 
-        return res.status(201).json({ task, deadline, status, user_id: id })
+        return res.status(201).json('Tarefa adionada com sucesso')
     }
 }
 

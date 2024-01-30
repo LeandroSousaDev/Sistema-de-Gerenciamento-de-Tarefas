@@ -9,16 +9,25 @@ export class AddSubTask {
 
         const user_id = req.user
 
-        const task = await taskRepository.findOne({ where: { id: task_id } })
+        const task = await taskRepository.findOne({
+            where: { id: task_id },
+            relations: {
+                user: true
+            }
+        })
 
         if (!task) {
             throw new Conflict('Essa tarefa não existe')
         }
 
+        if (task.user.id != user_id.id) {
+            throw new Conflict('tarefa não corresponde a esse usuario')
+        }
+
         const newSubTask = subTaskRepository.create({ subTask, task: task_id, user: user_id })
         await subTaskRepository.save(newSubTask)
 
-        return res.status(201).json(newSubTask)
+        return res.status(201).json('Sub Tarefa adicionada com sucesso')
     }
 }
 
