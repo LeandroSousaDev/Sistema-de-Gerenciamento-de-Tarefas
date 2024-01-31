@@ -23,6 +23,6 @@ routes.put('/task/:id', validationUser, new UpdateTask().store)
 routes.delete('/task/:id', validationUser, new DeleteTask().store)
 
 routes.post('/addSubTask', new AddSubTask().store)
-routes.delete('/subtask/:id', new DeleteSubTask().store)
+routes.delete('/subtask/:id', validationUser, new DeleteSubTask().store)
 
 export default routes
